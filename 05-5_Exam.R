@@ -107,7 +107,7 @@ str(midwest)
 #  $ category            : chr  "AAR" "LHR" "AAR" "ALU" ...
 
 ## 문제 3: total, asian 변수를 이용해 '전체 인구 대비 아시아 인구 백분율' 파생 ㅂ녀수를 추가하고, 히스토그램을 만들어 분포를 살펴보세요
-midwest$totalPerAsian <- midwest$asian/midwest$total*100
+midwest$totalPerAsian <- midwest$asian/midwest$total
 head(midwest, 20)
 #    PID     county state  area   total popdensity popwhite popblack popamerindian  asian popother percwhite   percblack percamerindan  percasian  percother popadults  perchsd percollege  percprof poppovertyknown percpovertyknown percbelowpoverty percchildbelowpovert percadultpoverty
 # 1  561      ADAMS    IL 0.052   66090  1270.9615    63917     1702            98    249      124  96.71206  2.57527614    0.14828264 0.37675897 0.18762294     43298 75.10740   19.63139  4.355859           63628         96.27478        13.151443            18.011717        11.009776
@@ -173,37 +173,6 @@ head(midwest)
 table(midwest$totalPerAsianCategory)
 # large small
 #   119   318
+
+hist(table(midwest$totalPerAsianCategory))
 qplot(midwest$totalPerAsianCategory)
-
-
-
-
-############ 정답
-## 1.
-midwest <- as.data.frame(ggplot2::midwest)
-head(midwest)
-tail(midwest)
-View(midwest)
-dim(midwest)
-str(midwest)
-summary(midwest)
-
-## 2.
-library(dplyr)
-midwest <- rename(midwest, total = poptotal)
-midwest <- rename(midwest, asian = popasian)
-
-# 3.
-midwest$ratio <- midwest$asian/midwest$total*100
-hist(midwest$ratio)
-
-# 4.
-mean(midwest$ratio)
-midwest$group <- ifelse(midwest$ratio > 0.4872462, "large", "small")
-
-# 5.
-table(midwest$group)
-library(ggplot2)
-qplot(midwest$group)
-
-
